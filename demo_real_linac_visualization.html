@@ -1,0 +1,610 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Real LINAC Manual Demo</title>
+    <style>
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f5f5f5;
+        }
+        
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        
+        header h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+        
+        .extraction-metadata {
+            display: flex;
+            gap: 20px;
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+        
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 400px;
+            gap: 20px;
+        }
+        
+        .panel-header {
+            background: #34495e;
+            color: white;
+            padding: 15px;
+            border-radius: 8px 8px 0 0;
+        }
+        
+        .panel-header h2 {
+            margin-bottom: 10px;
+        }
+        
+        .text-panel, .entities-panel {
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+            overflow: hidden;
+        }
+        
+        .highlighted-text {
+            padding: 20px;
+            font-family: 'Courier New', monospace;
+            font-size: 14px;
+            line-height: 1.8;
+            white-space: pre-wrap;
+            max-height: 600px;
+            overflow-y: auto;
+            border: 1px solid #ecf0f1;
+        }
+        
+        .entity-highlight {
+            padding: 2px 4px;
+            border-radius: 3px;
+            cursor: pointer;
+            position: relative;
+            transition: opacity 0.3s;
+        }
+        
+        .entity-highlight:hover {
+            opacity: 1 !important;
+            box-shadow: 0 0 0 2px rgba(0,0,0,0.3);
+        }
+        
+        .legend {
+            margin-top: 10px;
+        }
+        
+        .legend-items {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .legend-item {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 12px;
+        }
+        
+        .legend-color {
+            width: 12px;
+            height: 12px;
+            border-radius: 2px;
+        }
+        
+        .entities-container {
+            max-height: 600px;
+            overflow-y: auto;
+            padding: 10px;
+        }
+        
+        .entity-card {
+            margin-bottom: 15px;
+            border: 1px solid #ecf0f1;
+            border-radius: 6px;
+            overflow: hidden;
+            transition: transform 0.2s;
+        }
+        
+        .entity-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        .card-header {
+            padding: 10px 15px;
+            background: #f8f9fa;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .card-header h3 {
+            font-size: 16px;
+            color: #2c3e50;
+            margin: 0;
+        }
+        
+        .entity-badges {
+            display: flex;
+            gap: 5px;
+        }
+        
+        .entity-type-badge, .confidence-badge {
+            padding: 2px 8px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            color: white;
+        }
+        
+        .confidence-badge {
+            background-color: #95a5a6;
+        }
+        
+        .card-content {
+            padding: 15px;
+        }
+        
+        .attributes {
+            margin-bottom: 10px;
+        }
+        
+        .attribute {
+            margin-bottom: 8px;
+            font-size: 13px;
+        }
+        
+        .attribute strong {
+            color: #34495e;
+        }
+        
+        .source-location {
+            border-top: 1px solid #ecf0f1;
+            padding-top: 10px;
+            margin-top: 10px;
+            font-size: 12px;
+            color: #7f8c8d;
+        }
+        
+        .context {
+            background: #f8f9fa;
+            padding: 8px;
+            border-radius: 4px;
+            margin-top: 5px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .filter-controls {
+            padding: 15px;
+            background: #f8f9fa;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        
+        .filter-group {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .filter-group label {
+            font-size: 13px;
+            font-weight: 500;
+        }
+        
+        .statistics {
+            display: flex;
+            gap: 15px;
+            margin-top: 10px;
+        }
+        
+        .stat-item {
+            text-align: center;
+        }
+        
+        .stat-number {
+            display: block;
+            font-size: 18px;
+            font-weight: bold;
+            color: #3498db;
+        }
+        
+        .stat-label {
+            font-size: 12px;
+            color: #bdc3c7;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #7f8c8d;
+            font-size: 12px;
+            margin-top: 20px;
+        }
+        
+        pre {
+            font-size: 11px;
+            background: #f8f9fa;
+            padding: 5px;
+            border-radius: 3px;
+            margin-top: 5px;
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Real LINAC Manual Demo</h1>
+            <div class="metadata">
+                <div class='extraction-metadata'><span>Model: mock_processing</span></div>
+            </div>
+        </header>
+        
+        <div class="main-content">
+            <div class="text-panel">
+                <div class="panel-header">
+                    <h2>Source Text with Highlighted Entities</h2>
+                    <div class="legend">
+                        <div class='legend-items'>
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #ff6b6b"></span>
+                <span class="legend-label">Error Codes</span>
+            </div>
+            
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #4ecdc4"></span>
+                <span class="legend-label">Components</span>
+            </div>
+            
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #45b7d1"></span>
+                <span class="legend-label">Procedures</span>
+            </div>
+            
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #f9ca24"></span>
+                <span class="legend-label">Safety Protocols</span>
+            </div>
+            
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #6c5ce7"></span>
+                <span class="legend-label">Systems</span>
+            </div>
+            
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #a29bfe"></span>
+                <span class="legend-label">Subsystems</span>
+            </div>
+            
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #fd79a8"></span>
+                <span class="legend-label">Relationships</span>
+            </div>
+            
+            <div class="legend-item">
+                <span class="legend-color" style="background-color: #00b894"></span>
+                <span class="legend-label">Technical Specifications</span>
+            </div>
+            </div>
+                    </div>
+                </div>
+                <div class="highlighted-text">
+                    
+VARIAN MEDICAL SYSTEMS
+TrueBeam STx Linear Accelerator
+Service Manual - Version 2.7
+
+Chapter 4: Multi-Leaf Collimator (MLC) System
+
+4.1 System Overview
+
+The Multi-Leaf Collimator (MLC) system consists of 120 tungsten leaves arranged in two banks of 60 leaves each. The system provides precise beam shaping capabilities for intensity-modulated radiation therapy (IMRT) and volumetric modulated arc therapy (VMAT).
+
+Key Components:
+- 
+        <span class="entity-highlight components" 
+              style="background-color: #4ecdc4; opacity: 0.652"
+              data-entity-type="components"
+              data-confidence="0.88"
+              title="Type: Components<br>Confidence: 0.88<br>Function: Controls MLC leaf positioning<br>Type: controller<br>">
+            MLC Controller Unit
+        </span>
+         (Part Number: MLC-CTRL-2000)
+- 
+        <span class="entity-highlight components" 
+              style="background-color: #4ecdc4; opacity: 0.66"
+              data-entity-type="components"
+              data-confidence="0.9"
+              title="Type: Components<br>Confidence: 0.90<br>Type: actuator<br>">
+            Leaf Drive Motors
+        </span>
+         (Part Number: LDM-001-V3) - 120 units
+- Position Encoders (Part Number: ENC-HD-500) - 120 units
+- Motor Driver Cards (Part Number: MDC-24V-100) - 10 units
+- Safety Interlock System (Part Number: SIS-MLC-200)
+
+4.2 Error Codes and Troubleshooting
+
+
+        <span class="entity-highlight error_codes" 
+              style="background-color: #ff6b6b; opacity: 0.6799999999999999"
+              data-entity-type="error_codes"
+              data-confidence="0.95"
+              title="Type: Error Codes<br>Confidence: 0.95<br>Message: LEAF MOVEMENT ERROR<br>Category: Mechanical<br>">
+            Erro
+        </span>
+        r Code: 7002
+Message: LEAF MOVEMENT ERROR
+Description: The actual direction of movement of a leaf does not match the expected direction, or a leaf has moved that should be stationary.
+Possible Causes:
+- Faulty leaf drive motor
+- Damaged position encoder
+- Loose motor connections
+- Motor driver card failure
+Response: Check drive connections to leaf motors and verify free movement of leaves.
+
+
+        <span class="entity-highlight error_codes" 
+              style="background-color: #ff6b6b; opacity: 0.668"
+              data-entity-type="error_codes"
+              data-confidence="0.92"
+              title="Type: Error Codes<br>Confidence: 0.92<br>Message: LEAF POSITION TIMEOUT<br>Category: Mechanical<br>">
+            Erro
+        </span>
+        r Code: 7003  
+Message: LEAF POSITION TIMEOUT
+Description: A leaf has not reached its commanded position within the specified time limit.
+Possible Causes:
+- Mechanical obstruction
+- Motor power supply failure
+- Encoder calibration error
+Response: Inspect leaf bank for obstructions and verify motor power supply voltages.
+
+Error Code: 7004
+Message: MLC INTERLOCK FAILURE
+Description: Safety interlock system has detected an unsafe condition.
+Possible Causes:
+- Door position sensor failure
+- Emergency stop activation
+- Interlock circuit malfunction
+Response: Check all safety interlocks and door positions before resetting.
+
+4.3 Maintenance Procedures
+
+4.3.1 Daily Checks
+- Verify leaf position accuracy using QA phantom
+- Check motor temperatures (should be &lt; 45°C)
+- Inspect leaf surfaces for damage
+
+4.3.2 Weekly Maintenance
+- Lubricate leaf guid
+                </div>
+            </div>
+            
+            <div class="entities-panel">
+                <div class="panel-header">
+                    <h2>Extracted Entities</h2>
+                    
+        <div class="statistics">
+            <div class="stat-item">
+                <span class="stat-number">4</span>
+                <span class="stat-label">Total Entities</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">2</span>
+                <span class="stat-label">Entity Types</span>
+            </div>
+            <div class="stat-item">
+                <span class="stat-number">0.91</span>
+                <span class="stat-label">Avg Confidence</span>
+            </div>
+        </div>
+        
+                </div>
+                <div class="entity-filters">
+                    
+        <div class="filter-controls">
+            <div class="filter-group">
+                <label>Entity Type:</label>
+                <select id="entity-type-filter">
+                    <option value="all">All Types</option>
+                    <option value="error_codes">Error Codes</option>
+                    <option value="components">Components</option>
+                    <option value="procedures">Procedures</option>
+                    <option value="safety_protocols">Safety Protocols</option>
+                    <option value="systems">Systems</option>
+                    <option value="subsystems">Subsystems</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Min Confidence:</label>
+                <input type="range" id="confidence-filter" min="0" max="1" step="0.1" value="0">
+                <span id="confidence-value">0.0</span>
+            </div>
+        </div>
+        
+                </div>
+                <div class="entities-container">
+                    
+            <div class="entity-card error_codes" 
+                 data-entity-type="error_codes"
+                 data-confidence="0.95">
+                <div class="card-header" style="border-left: 4px solid #ff6b6b">
+                    <h3>7002</h3>
+                    <div class="entity-badges">
+                        <span class="entity-type-badge" style="background-color: #ff6b6b">Error Codes</span>
+                        <span class="confidence-badge">0.95</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class='attributes'><div class='attribute'><strong>Message:</strong> LEAF MOVEMENT ERROR</div><div class='attribute'><strong>Description:</strong> Leaf direction mismatch or stationary leaf moved</div><div class='attribute'><strong>Category:</strong> Mechanical</div></div>
+                    <div class='source-location'><h4>Source Location:</h4><div>Characters: 748 - 752</div><div class='context'><strong>Context:</strong> Error Code: 7002</div></div>
+                </div>
+            </div>
+            
+            <div class="entity-card error_codes" 
+                 data-entity-type="error_codes"
+                 data-confidence="0.92">
+                <div class="card-header" style="border-left: 4px solid #ff6b6b">
+                    <h3>7003</h3>
+                    <div class="entity-badges">
+                        <span class="entity-type-badge" style="background-color: #ff6b6b">Error Codes</span>
+                        <span class="confidence-badge">0.92</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class='attributes'><div class='attribute'><strong>Message:</strong> LEAF POSITION TIMEOUT</div><div class='attribute'><strong>Description:</strong> Leaf not reached position in time</div><div class='attribute'><strong>Category:</strong> Mechanical</div></div>
+                    <div class='source-location'><h4>Source Location:</h4><div>Characters: 1146 - 1150</div><div class='context'><strong>Context:</strong> Error Code: 7003</div></div>
+                </div>
+            </div>
+            
+            <div class="entity-card components" 
+                 data-entity-type="components"
+                 data-confidence="0.9">
+                <div class="card-header" style="border-left: 4px solid #4ecdc4">
+                    <h3>Leaf Drive Motors</h3>
+                    <div class="entity-badges">
+                        <span class="entity-type-badge" style="background-color: #4ecdc4">Components</span>
+                        <span class="confidence-badge">0.90</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class='attributes'><div class='attribute'><strong>Part Number:</strong> LDM-001-V3</div><div class='attribute'><strong>Type:</strong> actuator</div><div class='attribute'><strong>Quantity:</strong> 120 units</div></div>
+                    <div class='source-location'><h4>Source Location:</h4><div>Characters: 484 - 501</div><div class='context'><strong>Context:</strong> Leaf Drive Motors (Part Number: LDM-001-V3)</div></div>
+                </div>
+            </div>
+            
+            <div class="entity-card components" 
+                 data-entity-type="components"
+                 data-confidence="0.88">
+                <div class="card-header" style="border-left: 4px solid #4ecdc4">
+                    <h3>MLC Controller Unit</h3>
+                    <div class="entity-badges">
+                        <span class="entity-type-badge" style="background-color: #4ecdc4">Components</span>
+                        <span class="confidence-badge">0.88</span>
+                    </div>
+                </div>
+                <div class="card-content">
+                    <div class='attributes'><div class='attribute'><strong>Part Number:</strong> MLC-CTRL-2000</div><div class='attribute'><strong>Type:</strong> controller</div><div class='attribute'><strong>Function:</strong> Controls MLC leaf positioning</div></div>
+                    <div class='source-location'><h4>Source Location:</h4><div>Characters: 433 - 452</div><div class='context'><strong>Context:</strong> MLC Controller Unit (Part Number: MLC-CTRL-2000)</div></div>
+                </div>
+            </div>
+            
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>Generated on 2025-09-09 11:38:24 using LangExtract Integration</p>
+        </footer>
+    </div>
+    
+    <script>
+        
+        // Filter functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const typeFilter = document.getElementById('entity-type-filter');
+            const confidenceFilter = document.getElementById('confidence-filter');
+            const confidenceValue = document.getElementById('confidence-value');
+            
+            // Update confidence display
+            confidenceFilter.addEventListener('input', function() {
+                confidenceValue.textContent = this.value;
+                filterEntities();
+            });
+            
+            typeFilter.addEventListener('change', filterEntities);
+            
+            function filterEntities() {
+                const selectedType = typeFilter.value;
+                const minConfidence = parseFloat(confidenceFilter.value);
+                
+                const cards = document.querySelectorAll('.entity-card');
+                
+                cards.forEach(card => {
+                    const entityType = card.dataset.entityType;
+                    const confidence = parseFloat(card.dataset.confidence);
+                    
+                    const typeMatch = selectedType === 'all' || entityType === selectedType;
+                    const confidenceMatch = confidence >= minConfidence;
+                    
+                    if (typeMatch && confidenceMatch) {
+                        card.style.display = 'block';
+                    } else {
+                        card.style.display = 'none';
+                    }
+                });
+            }
+            
+            // Highlight synchronization
+            const highlights = document.querySelectorAll('.entity-highlight');
+            const cards = document.querySelectorAll('.entity-card');
+            
+            highlights.forEach(highlight => {
+                highlight.addEventListener('mouseenter', function() {
+                    const entityType = this.dataset.entityType;
+                    // Highlight corresponding cards
+                    cards.forEach(card => {
+                        if (card.dataset.entityType === entityType) {
+                            card.style.background = '#e8f4fd';
+                        }
+                    });
+                });
+                
+                highlight.addEventListener('mouseleave', function() {
+                    cards.forEach(card => {
+                        card.style.background = '';
+                    });
+                });
+            });
+            
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    const entityType = this.dataset.entityType;
+                    // Highlight corresponding text
+                    highlights.forEach(highlight => {
+                        if (highlight.dataset.entityType === entityType) {
+                            highlight.style.boxShadow = '0 0 0 2px #3498db';
+                        }
+                    });
+                });
+                
+                card.addEventListener('mouseleave', function() {
+                    highlights.forEach(highlight => {
+                        highlight.style.boxShadow = '';
+                    });
+                });
+            });
+        });
+        
+    </script>
+</body>
+</html>
