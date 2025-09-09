@@ -7,6 +7,7 @@ python-multipart>=0.0.6
 # AI and ML
 google-generativeai>=0.3.0
 openai>=1.3.0  # Alternative AI provider
+langextract>=0.4.0  # Google's LLM-powered entity extraction library
 
 # PDF Processing
 PyPDF2>=3.0.1
