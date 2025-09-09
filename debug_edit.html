@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Edit Function</title>
+    <script>
+        // Test if the edit function is accessible
+        function testEditFunction() {
+            console.log('Testing edit function...');
+            
+            // Check if API_BASE is defined
+            if (typeof API_BASE !== 'undefined') {
+                console.log('API_BASE:', API_BASE);
+            } else {
+                console.log('API_BASE not defined');
+            }
+            
+            // Check if editEntity function exists
+            if (typeof editEntity === 'function') {
+                console.log('editEntity function exists');
+                
+                // Try to call it with a test ID
+                try {
+                    editEntity('test-id');
+                } catch (error) {
+                    console.error('Error calling editEntity:', error);
+                }
+            } else {
+                console.log('editEntity function not found');
+            }
+            
+            // Check if bootstrap Modal is available
+            if (typeof bootstrap !== 'undefined' && bootstrap.Modal) {
+                console.log('Bootstrap Modal available');
+            } else {
+                console.log('Bootstrap Modal not available');
+            }
+        }
+        
+        // Run test when page loads
+        window.onload = testEditFunction;
+    </script>
+</head>
+<body>
+    <h1>Debug Edit Function</h1>
+    <p>Check the browser console for debug information.</p>
+    <button onclick="testEditFunction()">Test Edit Function</button>
+</body>
+</html>

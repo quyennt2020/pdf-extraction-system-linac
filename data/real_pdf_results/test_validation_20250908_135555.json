@@ -1,0 +1,3 @@
+{
+  "error": "'OntologyValidator' object has no attribute 'validate_hierarchical_structure'"
+}

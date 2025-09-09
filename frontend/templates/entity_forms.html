@@ -1,0 +1,300 @@
+<!-- Entity Editing Forms and Validation Interface -->
+
+<!-- Entity Edit Modal -->
+<div class="modal fade" id="entityEditModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-edit me-2"></i>
+                    Edit Entity
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Entity Form -->
+                    <div class="col-md-8">
+                        <form id="entity-edit-form">
+                            <input type="hidden" id="edit-entity-id">
+                            <input type="hidden" id="edit-entity-type">
+                            
+                            <!-- Basic Information -->
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Basic Information</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Label <span class="text-danger">*</span></label>
+                                                <input type="text" class="form-control" id="edit-label" required>
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Entity Type</label>
+                                                <input type="text" class="form-control" id="edit-type-display" readonly>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Description</label>
+                                        <textarea class="form-control" id="edit-description" rows="3"></textarea>
+                                        <div class="invalid-feedback"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Type-specific Fields -->
+                            <div class="card mb-3" id="type-specific-fields">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Specific Properties</h6>
+                                </div>
+                                <div class="card-body" id="type-specific-content">
+                                    <!-- Content will be dynamically generated -->
+                                </div>
+                            </div>
+                            
+                            <!-- Metadata -->
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Metadata & Validation</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Confidence Score</label>
+                                                <div class="input-group">
+                                                    <input type="range" class="form-range" id="edit-confidence" 
+                                                           min="0" max="1" step="0.01">
+                                                    <span class="input-group-text" id="confidence-display">0.00</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Validation Status</label>
+                                                <select class="form-select" id="edit-validation-status">
+                                                    <option value="not_validated">Not Validated</option>
+                                                    <option value="pending_review">Pending Review</option>
+                                                    <option value="expert_approved">Expert Approved</option>
+                                                    <option value="expert_rejected">Expert Rejected</option>
+                                                    <option value="needs_revision">Needs Revision</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label">Tags</label>
+                                        <input type="text" class="form-control" id="edit-tags" 
+                                               placeholder="Enter tags separated by commas">
+                                        <div class="form-text">Separate multiple tags with commas</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Validation Panel -->
+                    <div class="col-md-4">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">
+                                    <i class="fas fa-check-circle me-1"></i>
+                                    Validation Status
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="validation-issues">
+                                    <!-- Validation issues will be displayed here -->
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <button type="button" class="btn btn-outline-primary btn-sm w-100" 
+                                            onclick="validateCurrentEntity()">
+                                        <i class="fas fa-sync me-1"></i>
+                                        Re-validate
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h6 class="mb-0">
+                                    <i class="fas fa-history me-1"></i>
+                                    Review History
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="review-history">
+                                    <!-- Review history will be displayed here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" onclick="saveAsDraft()">
+                    <i class="fas fa-save me-1"></i>
+                    Save as Draft
+                </button>
+                <button type="button" class="btn btn-success" onclick="saveAndApprove()">
+                    <i class="fas fa-check me-1"></i>
+                    Save & Approve
+                </button>
+                <button type="button" class="btn btn-primary" onclick="saveEntity()">
+                    <i class="fas fa-save me-1"></i>
+                    Save Changes
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Validation Review Modal -->
+<div class="modal fade" id="validationReviewModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-clipboard-check me-2"></i>
+                    Entity Validation Review
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h6>Entity Information</h6>
+                        <div id="validation-entity-info">
+                            <!-- Entity info will be displayed here -->
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>Validation Results</h6>
+                        <div id="validation-results-display">
+                            <!-- Validation results will be displayed here -->
+                        </div>
+                    </div>
+                </div>
+                
+                <hr>
+                
+                <div class="row">
+                    <div class="col-12">
+                        <h6>Expert Review</h6>
+                        <form id="validation-review-form">
+                            <input type="hidden" id="review-entity-id">
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Review Action</label>
+                                <div class="btn-group w-100" role="group">
+                                    <input type="radio" class="btn-check" name="review-action" 
+                                           id="action-approve" value="approve">
+                                    <label class="btn btn-outline-success" for="action-approve">
+                                        <i class="fas fa-check me-1"></i>
+                                        Approve
+                                    </label>
+                                    
+                                    <input type="radio" class="btn-check" name="review-action" 
+                                           id="action-reject" value="reject">
+                                    <label class="btn btn-outline-danger" for="action-reject">
+                                        <i class="fas fa-times me-1"></i>
+                                        Reject
+                                    </label>
+                                    
+                                    <input type="radio" class="btn-check" name="review-action" 
+                                           id="action-revision" value="request_revision">
+                                    <label class="btn btn-outline-warning" for="action-revision">
+                                        <i class="fas fa-edit me-1"></i>
+                                        Request Revision
+                                    </label>
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label class="form-label">Review Comment <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="review-comment" rows="4" 
+                                          placeholder="Please provide detailed feedback..." required></textarea>
+                                <div class="form-text">
+                                    Explain your decision and provide specific guidance for improvements if needed.
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3" id="confidence-override-section" style="display: none;">
+                                <label class="form-label">Override Confidence Score</label>
+                                <div class="input-group">
+                                    <input type="range" class="form-range" id="review-confidence-override" 
+                                           min="0" max="1" step="0.01">
+                                    <span class="input-group-text" id="review-confidence-display">0.00</span>
+                                </div>
+                                <div class="form-check mt-2">
+                                    <input class="form-check-input" type="checkbox" id="enable-confidence-override">
+                                    <label class="form-check-label" for="enable-confidence-override">
+                                        Override confidence score based on expert assessment
+                                    </label>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="submitValidationReview()">
+                    <i class="fas fa-paper-plane me-1"></i>
+                    Submit Review
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Quick Validation Panel (for inline validation) -->
+<div class="offcanvas offcanvas-end" tabindex="-1" id="quickValidationPanel">
+    <div class="offcanvas-header">
+        <h5 class="offcanvas-title">
+            <i class="fas fa-tachometer-alt me-2"></i>
+            Quick Validation
+        </h5>
+        <button type="button" class="btn-close" data-bs-dismiss="offcanvas"></button>
+    </div>
+    <div class="offcanvas-body">
+        <div id="quick-validation-content">
+            <!-- Quick validation content will be loaded here -->
+        </div>
+        
+        <div class="mt-3">
+            <div class="d-grid gap-2">
+                <button class="btn btn-success" onclick="quickApproveFromPanel()">
+                    <i class="fas fa-check me-1"></i>
+                    Quick Approve
+                </button>
+                <button class="btn btn-warning" onclick="requestQuickRevision()">
+                    <i class="fas fa-edit me-1"></i>
+                    Request Revision
+                </button>
+                <button class="btn btn-danger" onclick="quickRejectFromPanel()">
+                    <i class="fas fa-times me-1"></i>
+                    Quick Reject
+                </button>
+                <button class="btn btn-outline-primary" onclick="openFullValidation()">
+                    <i class="fas fa-expand me-1"></i>
+                    Full Review
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Auto-completion suggestions -->
+<div class="dropdown-menu" id="autocomplete-suggestions" style="display: none;">
+    <!-- Autocomplete suggestions will be populated here -->
+</div>

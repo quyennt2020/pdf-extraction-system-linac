@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Sample Service Manual</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; line-height: 1.6; }
+        h1 { color: #2c3e50; border-bottom: 2px solid #3498db; }
+        h2 { color: #34495e; margin-top: 30px; }
+        h3 { color: #7f8c8d; }
+        .error-code { background-color: #f8f9fa; padding: 10px; border-left: 4px solid #e74c3c; margin: 10px 0; }
+        .part-number { font-family: monospace; background-color: #ecf0f1; padding: 2px 4px; }
+        .maintenance { background-color: #e8f5e8; padding: 10px; border-radius: 5px; margin: 10px 0; }
+    </style>
+</head>
+<body>
+<br>
+<h1>VARIAN MEDICAL SYSTEMS</h1>
+<p>TrueBeam STx Linear Accelerator</p>
+<p>Service Manual - Version 2.7</p>
+<br>
+<h2>Chapter 4: Multi-Leaf Collimator (MLC) System</h2>
+<br>
+<h3>4.1 System Overview</h3>
+<br>
+<p>The Multi-Leaf Collimator (MLC) system consists of 120 tungsten leaves arranged in two banks of 60 leaves each. The system provides precise beam shaping capabilities for intensity-modulated radiation therapy (IMRT) and volumetric modulated arc therapy (VMAT).</p>
+<br>
+<p>Key Components:</p>
+<p>- MLC Controller Unit (<span class="part-number">Part Number: MLC-CTRL-2000)</span></p>
+<p>- Leaf Drive Motors (<span class="part-number">Part Number: LDM-001-V3)</span> - 120 units</p>
+<p>- Position Encoders (<span class="part-number">Part Number: ENC-HD-500)</span> - 120 units</p>
+<p>- Motor Driver Cards (<span class="part-number">Part Number: MDC-24V-100)</span> - 10 units</p>
+<p>- Safety Interlock System (<span class="part-number">Part Number: SIS-MLC-200)</span></p>
+<br>
+<h3>4.2 Error Codes and Troubleshooting</h3>
+<br>
+<div class="error-code"><strong>Error Code: 7002</strong><br>Message: LEAF MOVEMENT ERROR<br>Description: The actual direction of movement of a leaf does not match the expected direction, or a leaf has moved that should be stationary.<br>Possible Causes:<br>- Faulty leaf drive motor<br>- Damaged position encoder<br>- Loose motor connections<br>- Motor driver card failure<br><strong>Response: Check drive connections to leaf motors and verify free movement of leaves.</strong></div>
+<br>
+<div class="error-code"><strong>Error Code: 7003</strong><br>Message: LEAF POSITION TIMEOUT<br>Description: A leaf has not reached its commanded position within the specified time limit.<br>Possible Causes:<br>- Mechanical obstruction<br>- Motor power supply failure<br>- Encoder calibration error<br><strong>Response: Inspect leaf bank for obstructions and verify motor power supply voltages.</strong></div>
+<br>
+<div class="error-code"><strong>Error Code: 7004</strong><br>Message: MLC INTERLOCK FAILURE<br>Description: Safety interlock system has detected an unsafe condition.<br>Possible Causes:<br>- Door position sensor failure<br>- Emergency stop activation<br>- Interlock circuit malfunction<br><strong>Response: Check all safety interlocks and door positions before resetting.</strong></div>
+<br>
+<h3>4.3 Maintenance Procedures</h3>
+<br>
+<h3>4.3.1 Daily Checks</h3>
+<p>- Verify leaf position accuracy using QA phantom</p>
+<p>- Check motor temperatures (should be < 45°C)</p>
+<p>- Inspect leaf surfaces for damage</p>
+<br>
+<h3>4.3.2 Weekly Maintenance</h3>
+<p>- Lubricate leaf guide rails (Use lubricant: LUB-MLC-001)</p>
+<p>- Check motor mounting bolts (Torque: 8.5 Nm)</p>
+<p>- Verify encoder calibration</p>
+<br>
+<h3>4.3.3 Monthly Maintenance</h3>
+<p>- Replace air filters (<span class="part-number">Part Number: FILT-AIR-MLC)</span></p>
+<p>- Check cooling system operation</p>
+<p>- Perform comprehensive position accuracy test</p>
+<br>
+<p>4.4 Spare Parts List</p>
+<br>
+<p>Critical Spare Parts (Keep in Stock):</p>
+<p>- Leaf Drive Motor (LDM-001-V3) - Quantity: 5</p>
+<p>- Position Encoder (ENC-HD-500) - Quantity: 5</p>
+<p>- Motor Driver Card (MDC-24V-100) - Quantity: 2</p>
+<p>- Air Filter (FILT-AIR-MLC) - Quantity: 10</p>
+<p>- Leaf Guide Rail (LGR-TUNG-120) - Quantity: 2</p>
+<br>
+<p>Recommended Spare Parts:</p>
+<p>- MLC Controller Unit (MLC-CTRL-2000) - Quantity: 1</p>
+<p>- Safety Interlock Module (SIM-MLC-001) - Quantity: 1</p>
+<p>- Power Supply Unit (PSU-24V-500W) - Quantity: 1</p>
+<br>
+<h2>Chapter 5: Gantry System</h2>
+<br>
+<h3>5.1 Gantry Drive System</h3>
+<br>
+<p>The gantry rotation system uses a servo motor drive with high-precision encoder feedback to provide accurate angular positioning.</p>
+<br>
+<p>Components:</p>
+<p>- Gantry Drive Motor (<span class="part-number">Part Number: GDM-5KW-SR)</span></p>
+<p>- Gantry Position Encoder (<span class="part-number">Part Number: GPE-ABS-19BIT)</span></p>
+<p>- Motor Controller (<span class="part-number">Part Number: MC-SERVO-5K)</span></p>
+<p>- Brake System (<span class="part-number">Part Number: BRK-ELEC-500)</span></p>
+<br>
+<h3>5.2 Error Codes</h3>
+<br>
+<div class="error-code"><strong>Error Code: 8001</strong><br>Message: GANTRY POSITION ERROR<br>Description: Gantry position feedback does not match commanded position.<br><strong>Response: Check encoder connections and recalibrate if necessary.</strong></div>
+<br>
+<div class="error-code"><strong>Error Code: 8002</strong><br>Message: GANTRY OVERSPEED<br>Description: Gantry rotation speed exceeds safety limits.<br><strong>Response: Check motor controller parameters and brake system operation.</strong></div>
+<br>
+<h2>Chapter 6: Patient Support System</h2>
+<br>
+<h3>6.1 Treatment Couch</h3>
+<br>
+<p>The treatment couch provides 6-degree-of-freedom positioning with the following components:</p>
+<br>
+<p>- Couch Drive Motors (<span class="part-number">Part Number: CDM-SERVO-2K)</span> - 6 units</p>
+<p>- Position Sensors (<span class="part-number">Part Number: PS-LINEAR-500)</span> - 6 units</p>
+<p>- Couch Controller (<span class="part-number">Part Number: CC-6DOF-MAIN)</span></p>
+<p>- Load Cell Assembly (<span class="part-number">Part Number: LC-2000KG)</span></p>
+<br>
+<h3>6.2 Safety Systems</h3>
+<br>
+<p>- Patient Collision Detection (<span class="part-number">Part Number: PCD-LASER-360)</span></p>
+<p>- Emergency Stop System (<span class="part-number">Part Number: ESS-COUCH-001)</span></p>
+<p>- Weight Limit Monitor (<span class="part-number">Part Number: WLM-200KG)</span></p>
+<br>
+<p>Maintenance Schedule:</p>
+<div class="maintenance"><strong>- Daily: Check emergency stops and collision detection</strong></div>
+<div class="maintenance"><strong>- Weekly: Lubricate drive mechanisms</strong></div>
+<div class="maintenance"><strong>- Monthly: Calibrate position sensors and load cells</strong></div>
+<p>- Quarterly: Replace drive belts (<span class="part-number">Part Number: BELT-COUCH-XL)</span></p>
+<br>
+<p>This completes the MLC, Gantry, and Patient Support system documentation.</p>
+<p>For additional technical support, contact Varian Service at 1-800-VARIAN-1.</p>
+<br>
+<p>Document Version: 2.7.3</p>
+<p>Last Updated: March 2024</p>
+<p>Classification: Service Personnel Only</p>
+<br>
+
+</body>
+</html>

@@ -1,0 +1,11 @@
+{
+  "permissions": {
+    "allow": [
+      "Read(/C:\\Users\\TPump\\Desktop\\langextract\\langextract/**)",
+      "Bash(git init:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

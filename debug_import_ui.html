@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Import UI</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Import UI Debug</h2>
+        
+        <button class="btn btn-primary" onclick="testImportModal()">Test Import Modal</button>
+        
+        <div class="mt-3">
+            <h4>JavaScript Console Output:</h4>
+            <div id="console-output" class="border p-3" style="height: 200px; overflow-y: auto; background-color: #f8f9fa;"></div>
+        </div>
+        
+        <div class="mt-3">
+            <h4>Function Check:</h4>
+            <div id="function-check"></div>
+        </div>
+    </div>
+
+    <!-- Import Data Modal -->
+    <div class="modal fade" id="importDataModal" tabindex="-1">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">
+                        <i class="fas fa-upload me-2"></i>
+                        Import Entity Data
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p>Import modal is working!</p>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Override console.log to show in page
+        const originalLog = console.log;
+        const consoleOutput = document.getElementById('console-output');
+        
+        console.log = function(...args) {
+            originalLog.apply(console, args);
+            const message = args.join(' ');
+            consoleOutput.innerHTML += message + '<br>';
+            consoleOutput.scrollTop = consoleOutput.scrollHeight;
+        };
+        
+        // Test function
+        function testImportModal() {
+            console.log('Testing import modal...');
+            
+            try {
+                if (typeof bootstrap === 'undefined') {
+                    console.log('ERROR: Bootstrap is not loaded');
+                    return;
+                }
+                
+                const modalElement = document.getElementById('importDataModal');
+                if (!modalElement) {
+                    console.log('ERROR: Modal element not found');
+                    return;
+                }
+                
+                console.log('Modal element found');
+                
+                const modal = new bootstrap.Modal(modalElement);
+                modal.show();
+                
+                console.log('Modal should be showing now');
+                
+            } catch (error) {
+                console.log('ERROR: ' + error.message);
+            }
+        }
+        
+        // Check if showImportModal function exists
+        function checkFunctions() {
+            const functionCheck = document.getElementById('function-check');
+            
+            if (typeof showImportModal === 'function') {
+                functionCheck.innerHTML = '<span class="text-success">✓ showImportModal function exists</span>';
+            } else {
+                functionCheck.innerHTML = '<span class="text-danger">✗ showImportModal function not found</span>';
+            }
+        }
+        
+        // Run checks when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('Page loaded');
+            checkFunctions();
+        });
+        
+        // Simple showImportModal function for testing
+        function showImportModal() {
+            console.log('showImportModal called');
+            testImportModal();
+        }
+    </script>
+</body>
+</html>

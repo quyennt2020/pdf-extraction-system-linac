@@ -1,0 +1,140 @@
+{
+  "entities": [
+    {
+      "id": "system_linac",
+      "entity_type": "system",
+      "label": "Elekta Digital Linear Accelerator",
+      "description": "Hệ thống máy gia tốc tuyến tính kỹ thuật số của Elekta, được sử dụng cho mục đích xạ trị."
+    },
+    {
+      "id": "subsystem_mlc",
+      "entity_type": "subsystem",
+      "label": "Multi-Leaf Collimator (MLCi/MLCi2)",
+      "description": "Phân hệ chuẩn trực đa lá (MLC), một bộ phận quan trọng của máy gia tốc, dùng để định hình chùm tia bức xạ theo hình dạng khối u.",
+      "parent_system_id": "system_linac"
+    },
+    {
+      "id": "component_tcs",
+      "entity_type": "component",
+      "label": "Treatment Control System (TCS)",
+      "description": "Hệ thống điều khiển điều trị của máy gia tốc, là trung tâm chỉ huy cho mọi hoạt động, bao gồm cả MLC.",
+      "parent_subsystem_id": "subsystem_mlc"
+    },
+    {
+      "id": "component_bld_software",
+      "entity_type": "component",
+      "label": "BLD Control Software",
+      "description": "Phần mềm chuyên dụng để điều khiển thiết bị giới hạn chùm tia (Beam Limiting Device - BLD), bao gồm MLCi/MLCi2.",
+      "parent_subsystem_id": "subsystem_mlc"
+    },
+    {
+      "id": "component_optics_assembly",
+      "entity_type": "component",
+      "label": "Retractable Optics Assembly",
+      "description": "Một module quang học có thể tháo rời, chứa các bộ phận quang học chính để dễ dàng bảo trì.",
+      "parent_subsystem_id": "subsystem_mlc"
+    },
+    {
+      "id": "component_projector_bulb",
+      "entity_type": "component",
+      "label": "Projector Bulb Assembly",
+      "description": "Cụm đèn chiếu (đèn định vị trường) tạo ra ánh sáng nhìn thấy để mô phỏng hình dạng chùm tia xạ trị.",
+      "parent_subsystem_id": "subsystem_mlc"
+    },
+    {
+      "id": "component_camera",
+      "entity_type": "component",
+      "label": "Remote Camera",
+      "description": "Camera chịu được bức xạ, được gắn trên cụm quang học để ghi lại hình ảnh của các lá.",
+      "parent_subsystem_id": "subsystem_mlc"
+    },
+    {
+      "id": "component_ccu",
+      "entity_type": "component",
+      "label": "Camera Control Unit (CCU) PCB",
+      "description": "Mạch điện tử điều khiển camera, xử lý tín hiệu hình ảnh và gửi về tủ điều khiển điều trị (TCC).",
+      "parent_subsystem_id": "subsystem_mlc"
+    },
+    {
+      "id": "component_leafbank",
+      "entity_type": "component",
+      "label": "Leafbank Assembly",
+      "description": "Cụm chứa hai hàng lá vonfram đối diện nhau (40 lá mỗi hàng), có thể di chuyển để tạo thành khẩu độ mong muốn.",
+      "parent_subsystem_id": "subsystem_mlc"
+    },
+    {
+      "id": "component_tungsten_leaf",
+      "entity_type": "component",
+      "label": "Tungsten Leaf",
+      "description": "Một lá kim loại làm từ vonfram, được điều khiển độc lập để chặn hoặc cho chùm tia đi qua.",
+      "parent_component_id": "component_leafbank"
+    },
+    {
+      "id": "component_leaf_motor",
+      "entity_type": "component",
+      "label": "Leaf Drive Motor and Gearbox",
+      "description": "Động cơ DC và hộp số nhỏ, có tuổi thọ cao, dùng để điều khiển chuyển động tịnh tiến của mỗi lá.",
+      "parent_component_id": "component_leafbank"
+    },
+    {
+      "id": "component_rtu",
+      "entity_type": "component",
+      "label": "Remote Terminal Unit (RTU) Assembly",
+      "description": "Phiên bản hệ thống điều khiển điện tử cũ, được lắp trên các máy MLCi có số sê-ri đến 141097.",
+      "parent_subsystem_id": "subsystem_mlc"
+    },
+    {
+      "id": "component_bld_electronics",
+      "entity_type": "component",
+      "label": "BLD Electronic Assembly",
+      "description": "Phiên bản hệ thống điều khiển điện tử mới, được lắp trên các máy MLCi có số sê-ri từ 141098 trở đi và tất cả máy MLCi2.",
+      "parent_subsystem_id": "subsystem_mlc"
+    },
+    {
+      "id": "component_motor_drive_board",
+      "entity_type": "component",
+      "label": "Motor Drive Board",
+      "description": "Bảng mạch điều khiển động cơ, nhận tín hiệu và điều phối năng lượng để điều khiển tốc độ và vị trí của từng lá.",
+      "parent_subsystem_id": "subsystem_mlc"
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_type": "has_subsystem",
+      "source_entity_id": "system_linac",
+      "target_entity_id": "subsystem_mlc",
+      "description": "Hệ thống Linac chứa phân hệ MLC."
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_mlc",
+      "target_entity_id": "component_leafbank",
+      "description": "Phân hệ MLC chứa Cụm lá chắn."
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "component_leafbank",
+      "target_entity_id": "component_tungsten_leaf",
+      "description": "Cụm lá chắn chứa các Lá Vonfram."
+    },
+    {
+      "relationship_type": "controls",
+      "source_entity_id": "component_tcs",
+      "target_entity_id": "subsystem_mlc",
+      "description": "Hệ thống Điều khiển Điều trị (TCS) điều khiển toàn bộ hoạt động của phân hệ MLC."
+    },
+    {
+      "relationship_type": "controls",
+      "source_entity_id": "component_leaf_motor",
+      "target_entity_id": "component_tungsten_leaf",
+      "description": "Động cơ điều khiển chuyển động của Lá Vonfram."
+    },
+    {
+      "relationship_type": "monitors",
+      "source_entity_id": "component_camera",
+      "target_entity_id": "component_leafbank",
+      "description": "Camera giám sát vị trí của các lá trong Cụm lá chắn để cung cấp phản hồi cho hệ thống điều khiển."
+    }
+  ]
+}
+

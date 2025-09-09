@@ -1,0 +1,57 @@
+{
+  "metadata": {
+    "source_pdf": "data/input_pdfs/test.pdf",
+    "extraction_timestamp": "20250908_135555",
+    "processing_stats": {
+      "total_pages": 31,
+      "processed_pages": 4,
+      "failed_pages": 16,
+      "total_entities": 16,
+      "entities_by_type": {
+        "error_codes": 16
+      },
+      "processing_errors": [
+        "Error processing page 2: RetryError[<Future at 0x1c3b4f0ff70 state=finished raised ResourceExhausted>]",
+        "Error processing page 5: RetryError[<Future at 0x1c3b86b78b0 state=finished raised ResourceExhausted>]",
+        "Error processing page 6: RetryError[<Future at 0x1c3b86b4b20 state=finished raised ResourceExhausted>]",
+        "Error processing page 7: RetryError[<Future at 0x1c3b86b45b0 state=finished raised ResourceExhausted>]",
+        "Error processing page 8: RetryError[<Future at 0x1c3b86b6380 state=finished raised ResourceExhausted>]",
+        "Error processing page 9: RetryError[<Future at 0x1c3b86b7760 state=finished raised ResourceExhausted>]",
+        "Error processing page 10: RetryError[<Future at 0x1c3b86b5ab0 state=finished raised ResourceExhausted>]",
+        "Error processing page 11: RetryError[<Future at 0x1c3b86b65f0 state=finished raised ResourceExhausted>]",
+        "Error processing page 12: RetryError[<Future at 0x1c3b86b4400 state=finished raised ResourceExhausted>]",
+        "Error processing page 13: RetryError[<Future at 0x1c3b86b7670 state=finished raised ResourceExhausted>]",
+        "Error processing page 14: RetryError[<Future at 0x1c3b86b4700 state=finished raised ResourceExhausted>]",
+        "Error processing page 15: RetryError[<Future at 0x1c3b86b4d90 state=finished raised ResourceExhausted>]",
+        "Error processing page 16: RetryError[<Future at 0x1c3b86b4370 state=finished raised ResourceExhausted>]",
+        "Error processing page 17: RetryError[<Future at 0x1c3b86b4970 state=finished raised ResourceExhausted>]",
+        "Error processing page 18: RetryError[<Future at 0x1c3b86b66e0 state=finished raised ResourceExhausted>]",
+        "Error processing page 19: RetryError[<Future at 0x1c3b86b6b00 state=finished raised ResourceExhausted>]"
+      ],
+      "deduplicated_entities": 1,
+      "duplicates_removed": 15
+    }
+  },
+  "entities": [
+    {
+      "id": "f054cdeb-76e8-4fcb-ac77-d3351bd85fd1",
+      "confidence": 0.8,
+      "source_page": 3,
+      "source_text": "MLCi and MLCi2 control subsystem\nSystem description\n4513 370 2102 03\nElekta Digital Linear Accelerator\nCorrective Maintenance Manual – MLCi and MLCi2\nCopyright ©2011 Elekta Limited. All rights reserved.\nPage 3-5\nPage 3-5\n3.2.4\nBlock diagram\nThe control system is shown schematically in Figure 3.1 for an MLCi fitted with the RTU \nassembly and in Figure 3.2 for MLCi/MLCi2 fitted with the BLD electronic assembly.\nFigure 3.1\nSchematic diagram of TCS and RTU (4513 332 6702)\nFigure 3.2\nSchematic diagra",
+      "extraction_timestamp": 1757314389.94993,
+      "code": "4513",
+      "software_release": "unknown",
+      "message": "unknown",
+      "description": "unknown",
+      "response": "unknown",
+      "category": "System",
+      "severity": "Medium",
+      "context": "```json\n{\n  \"systems\": [\n    {\n      \"name\": \"Elekta Digital Linear Accelerator\",\n      \"type\": \"Linear Accelerator\",\n      \"manufacturer\": \"Elekta Limited\",\n      \"primary_function\": \"Radiation thera...",
+      "parsing_metadata": {
+        "response_length": 3794,
+        "parsing_method": "json",
+        "parser_version": "1.0"
+      }
+    }
+  ]
+}

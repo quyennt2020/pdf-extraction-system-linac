@@ -1,0 +1,287 @@
+{
+  "entities": [
+    {
+      "id": "system_001",
+      "entity_type": "system",
+      "label": "Elekta Digital Linear Accelerator",
+      "description": "Hệ thống máy gia tốc tuyến tính kỹ thuật số được sử dụng trong xạ trị để điều trị ung thư.",
+      "manufacturer": "Elekta Limited"
+    },
+    {
+      "id": "subsystem_001",
+      "entity_type": "subsystem",
+      "label": "Multi-Leaf Collimator (MLCi/MLCi2)",
+      "description": "Một phân hệ của máy gia tốc tuyến tính, bao gồm các lá kim loại (leaves) để định hình chùm tia bức xạ.",
+      "parent_system_id": "system_001"
+    },
+    {
+      "id": "subsystem_002",
+      "entity_type": "subsystem",
+      "label": "Control Subsystem",
+      "description": "Phân hệ điều khiển hoạt động của MLCi/MLCi2, bao gồm phần cứng và phần mềm.",
+      "parent_subsystem_id": "subsystem_001"
+    },
+    {
+      "id": "subsystem_003",
+      "entity_type": "subsystem",
+      "label": "Optical Subsystem",
+      "description": "Phân hệ quang học chịu trách nhiệm chiếu một trường sáng tương ứng với trường bức xạ và giám sát vị trí của các lá.",
+      "parent_subsystem_id": "subsystem_001"
+    },
+    {
+      "id": "subsystem_004",
+      "entity_type": "subsystem",
+      "label": "Mechanical Subsystem",
+      "description": "Bao gồm các thành phần cơ khí của MLC như cụm lá chắn, màng chắn dự phòng và các phụ kiện.",
+      "parent_subsystem_id": "subsystem_001"
+    },
+    {
+      "id": "subsystem_005",
+      "entity_type": "subsystem",
+      "label": "Electrical Control Subsystem",
+      "description": "Phân hệ điều khiển điện tử nhận và gửi dữ liệu đến hệ thống điều trị (TCS).",
+      "parent_subsystem_id": "subsystem_001"
+    },
+    {
+      "id": "subsystem_006",
+      "entity_type": "subsystem",
+      "label": "Camera Subsystem",
+      "description": "Hệ thống camera ghi lại hình ảnh của các tấm phản quang trên lá để xác định vị trí chính xác của chúng.",
+      "parent_subsystem_id": "subsystem_001"
+    },
+    {
+      "id": "component_001",
+      "entity_type": "component",
+      "label": "Treatment Control System (TCS)",
+      "description": "Hệ thống điều khiển trung tâm của máy gia tốc, điều khiển toàn bộ quá trình điều trị.",
+      "parent_subsystem_id": "subsystem_002"
+    },
+    {
+      "id": "component_002",
+      "entity_type": "component",
+      "label": "BLD Control Software",
+      "description": "Phần mềm điều khiển hệ thống Beam Limiting Device (BLD), bao gồm MLCi/MLCi2.",
+      "parent_subsystem_id": "subsystem_002"
+    },
+    {
+      "id": "component_003",
+      "entity_type": "component",
+      "label": "Retractable Optics Assembly",
+      "description": "Module quang học có thể thu vào, chứa các thành phần như gương và đèn chiếu.",
+      "parent_subsystem_id": "subsystem_003"
+    },
+    {
+      "id": "component_004",
+      "entity_type": "component",
+      "label": "Projector Bulb Assembly",
+      "description": "Cụm đèn chiếu halogen dùng để tạo ra trường sáng mô phỏng trường chiếu xạ.",
+      "parent_component_id": "component_003"
+    },
+    {
+      "id": "component_005",
+      "entity_type": "component",
+      "label": "Beam Splitter Mirror",
+      "description": "Gương tách chùm tia, phản xạ 75% ánh sáng tới và truyền qua 25%.",
+      "parent_component_id": "component_003"
+    },
+    {
+      "id": "component_006",
+      "entity_type": "component",
+      "label": "Mylar Mirror",
+      "description": "Gương làm từ màng polyester tráng nhôm, cho phép tia X hoặc electron đi qua nhưng phản xạ ánh sáng.",
+      "parent_component_id": "component_003"
+    },
+    {
+      "id": "component_010",
+      "entity_type": "component",
+      "label": "Leafbank Assembly",
+      "description": "Cụm chứa hai hàng lá vonfram (40 lá mỗi hàng) để tạo hình chùm tia.",
+      "parent_subsystem_id": "subsystem_004"
+    },
+    {
+      "id": "component_011",
+      "entity_type": "component",
+      "label": "Tungsten Leaf",
+      "description": "Một lá vonfram riêng lẻ trong cụm lá chắn, có thể di chuyển độc lập.",
+      "parent_component_id": "component_010"
+    },
+    {
+      "id": "component_012",
+      "entity_type": "component",
+      "label": "Leaf Drive Motor and Gearbox",
+      "description": "Động cơ DC và hộp số điều khiển chuyển động của mỗi lá vonfram.",
+      "parent_component_id": "component_010"
+    },
+    {
+      "id": "component_013",
+      "entity_type": "component",
+      "label": "Backup Diaphragms",
+      "description": "Màng chắn dự phòng dùng để chuẩn trực bổ sung.",
+      "parent_subsystem_id": "subsystem_004"
+    },
+    {
+      "id": "component_014",
+      "entity_type": "component",
+      "label": "Remote Terminal Unit (RTU) Assembly",
+      "description": "Một phiên bản của hệ thống điều khiển điện, được lắp trên các MLCi đời cũ.",
+      "parent_subsystem_id": "subsystem_005"
+    },
+    {
+      "id": "component_015",
+      "entity_type": "component",
+      "label": "BLD Electronic Assembly",
+      "description": "Một phiên bản của hệ thống điều khiển điện, được lắp trên các MLCi đời mới và tất cả MLCi2.",
+      "parent_subsystem_id": "subsystem_005"
+    },
+    {
+      "id": "component_016",
+      "entity_type": "component",
+      "label": "Distribution Board",
+      "description": "Bảng mạch phân phối, là trung tâm kết nối giữa TCS và các bộ phận khác của hệ thống điều khiển điện BLD.",
+      "parent_component_id": "component_014"
+    },
+    {
+      "id": "component_017",
+      "entity_type": "component",
+      "label": "Motor Drive Board",
+      "description": "Bảng mạch điều khiển động cơ, nhận tín hiệu và điều chỉnh tốc độ của từng động cơ lá.",
+      "parent_subsystem_id": "subsystem_005"
+    },
+    {
+      "id": "component_021",
+      "entity_type": "component",
+      "label": "Remote Camera",
+      "description": "Camera chịu được bức xạ, ghi lại hình ảnh của các điểm phản quang trên lá.",
+      "parent_subsystem_id": "subsystem_006"
+    },
+    {
+      "id": "component_022",
+      "entity_type": "component",
+      "label": "Camera Control Unit (CCU) PCB",
+      "description": "Bảng mạch điều khiển camera, xử lý tín hiệu video và gửi dữ liệu đến tủ điều khiển.",
+      "parent_subsystem_id": "subsystem_006"
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_type": "has_subsystem",
+      "source_entity_id": "system_001",
+      "target_entity_id": "subsystem_001",
+      "description": "Hệ thống máy gia tốc tuyến tính Elekta chứa phân hệ Multi-Leaf Collimator."
+    },
+    {
+      "relationship_type": "has_subsystem",
+      "source_entity_id": "subsystem_001",
+      "target_entity_id": "subsystem_002",
+      "description": "MLC chứa phân hệ Điều khiển."
+    },
+    {
+      "relationship_type": "has_subsystem",
+      "source_entity_id": "subsystem_001",
+      "target_entity_id": "subsystem_003",
+      "description": "MLC chứa phân hệ Quang học."
+    },
+    {
+      "relationship_type": "has_subsystem",
+      "source_entity_id": "subsystem_001",
+      "target_entity_id": "subsystem_004",
+      "description": "MLC chứa phân hệ Cơ khí."
+    },
+    {
+      "relationship_type": "has_subsystem",
+      "source_entity_id": "subsystem_001",
+      "target_entity_id": "subsystem_005",
+      "description": "MLC chứa phân hệ Điều khiển Điện."
+    },
+    {
+      "relationship_type": "has_subsystem",
+      "source_entity_id": "subsystem_001",
+      "target_entity_id": "subsystem_006",
+      "description": "MLC chứa phân hệ Camera."
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_002",
+      "target_entity_id": "component_001",
+      "description": "Phân hệ điều khiển bao gồm Hệ thống Điều khiển Điều trị (TCS)."
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_002",
+      "target_entity_id": "component_002",
+      "description": "Phân hệ điều khiển bao gồm Phần mềm Điều khiển BLD."
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_003",
+      "target_entity_id": "component_003",
+      "description": "Phân hệ quang học chứa Cụm quang học có thể thu vào."
+    },
+    {
+      "relationship_type": "contains",
+      "source_entity_id": "component_003",
+      "target_entity_id": "component_004",
+      "description": "Cụm quang học chứa Cụm đèn chiếu."
+    },
+    {
+      "relationship_type": "contains",
+      "source_entity_id": "component_003",
+      "target_entity_id": "component_005",
+      "description": "Cụm quang học chứa Gương tách chùm tia."
+    },
+    {
+      "relationship_type": "contains",
+      "source_entity_id": "component_003",
+      "target_entity_id": "component_006",
+      "description": "Cụm quang học chứa Gương Mylar."
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_004",
+      "target_entity_id": "component_010",
+      "description": "Phân hệ cơ khí chứa Cụm lá chắn."
+    },
+    {
+      "relationship_type": "contains",
+      "source_entity_id": "component_010",
+      "target_entity_id": "component_011",
+      "description": "Cụm lá chắn chứa các Lá Vonfram."
+    },
+    {
+      "relationship_type": "contains",
+      "source_entity_id": "component_010",
+      "target_entity_id": "component_012",
+      "description": "Cụm lá chắn chứa Động cơ và Hộp số của lá."
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_005",
+      "target_entity_id": "component_014",
+      "description": "Phân hệ điện điều khiển có thể là một Cụm RTU."
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_005",
+      "target_entity_id": "component_015",
+      "description": "Phân hệ điện điều khiển có thể là một Cụm Điện tử BLD."
+    },
+     {
+      "relationship_type": "contains",
+      "source_entity_id": "component_014",
+      "target_entity_id": "component_016",
+      "description": "Cụm RTU chứa Bảng mạch Phân phối."
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_006",
+      "target_entity_id": "component_021",
+      "description": "Phân hệ Camera chứa Camera từ xa."
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_006",
+      "target_entity_id": "component_022",
+      "description": "Phân hệ Camera chứa Bảng mạch Điều khiển Camera (CCU)."
+    }
+  ]
+}

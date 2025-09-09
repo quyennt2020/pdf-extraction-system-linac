@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Dashboard JS</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-4">
+        <h2>Dashboard JS Test</h2>
+        
+        <div class="alert alert-info">
+            <strong>Testing:</strong> Import functionality in dashboard.js
+        </div>
+        
+        <button class="btn btn-primary" onclick="testImportFunction()">Test showImportModal Function</button>
+        
+        <div class="mt-3">
+            <h4>Test Results:</h4>
+            <div id="test-results"></div>
+        </div>
+        
+        <!-- Import Modal -->
+        <div class="modal fade" id="importDataModal" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Import Test</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p>Import modal is working!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="/static/js/dashboard.js"></script>
+    
+    <script>
+        function testImportFunction() {
+            const results = document.getElementById('test-results');
+            results.innerHTML = '';
+            
+            // Test 1: Check if function exists
+            if (typeof showImportModal === 'function') {
+                results.innerHTML += '<div class="alert alert-success">✓ showImportModal function exists</div>';
+                
+                // Test 2: Try to call the function
+                try {
+                    showImportModal();
+                    results.innerHTML += '<div class="alert alert-success">✓ showImportModal function executed successfully</div>';
+                } catch (error) {
+                    results.innerHTML += '<div class="alert alert-danger">✗ Error calling showImportModal: ' + error.message + '</div>';
+                }
+            } else {
+                results.innerHTML += '<div class="alert alert-danger">✗ showImportModal function not found</div>';
+                
+                // Check what functions are available
+                results.innerHTML += '<div class="alert alert-info">Available functions in window object:</div>';
+                const functions = [];
+                for (let prop in window) {
+                    if (typeof window[prop] === 'function' && prop.includes('Import')) {
+                        functions.push(prop);
+                    }
+                }
+                if (functions.length > 0) {
+                    results.innerHTML += '<ul>';
+                    functions.forEach(func => {
+                        results.innerHTML += '<li>' + func + '</li>';
+                    });
+                    results.innerHTML += '</ul>';
+                } else {
+                    results.innerHTML += '<p>No import-related functions found</p>';
+                }
+            }
+        }
+        
+        // Auto-test when page loads
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(testImportFunction, 1000);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,396 @@
+{
+  "entities": [
+    {
+      "id": "system_001",
+      "entity_type": "system",
+      "label": "TrueBeam STx Linear Accelerator",
+      "description": "Linear Accelerator for radiation therapy",
+      "system_type": "linac",
+      "model_number": "TrueBeam STx",
+      "manufacturer": "Varian Medical Systems",
+      "metadata": {
+        "confidence_score": 0.95,
+        "validation_status": "pending_review",
+        "source_document": "sample_service_manual.txt",
+        "extraction_method": "simulated"
+      }
+    },
+    {
+      "id": "subsystem_001",
+      "entity_type": "subsystem",
+      "label": "Multi-Leaf Collimator System",
+      "description": "120 tungsten leaves arranged in two banks for precise beam shaping",
+      "subsystem_type": "beam_delivery",
+      "parent_system_id": "system_001",
+      "metadata": {
+        "confidence_score": 0.92,
+        "validation_status": "pending_review",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "subsystem_002",
+      "entity_type": "subsystem",
+      "label": "Gantry System",
+      "description": "Gantry rotation system with servo motor drive and high-precision encoder",
+      "subsystem_type": "mechanical",
+      "parent_system_id": "system_001",
+      "metadata": {
+        "confidence_score": 0.9,
+        "validation_status": "pending_review",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "subsystem_003",
+      "entity_type": "subsystem",
+      "label": "Patient Support System",
+      "description": "Treatment couch with 6-degree-of-freedom positioning",
+      "subsystem_type": "mechanical",
+      "parent_system_id": "system_001",
+      "metadata": {
+        "confidence_score": 0.88,
+        "validation_status": "pending_review",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "component_001",
+      "entity_type": "component",
+      "label": "MLC Controller Unit",
+      "description": "Controller component for medical device system",
+      "component_type": "Controller",
+      "part_number": "MLC-CTRL-2000",
+      "manufacturer": "Varian Medical Systems",
+      "parent_subsystem_id": "subsystem_001",
+      "metadata": {
+        "confidence_score": 0.85,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "component_002",
+      "entity_type": "component",
+      "label": "Leaf Drive Motor",
+      "description": "Motor component for medical device system",
+      "component_type": "Motor",
+      "part_number": "LDM-001-V3",
+      "manufacturer": "Varian Medical Systems",
+      "parent_subsystem_id": "subsystem_001",
+      "metadata": {
+        "confidence_score": 0.85,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "component_003",
+      "entity_type": "component",
+      "label": "Position Encoder",
+      "description": "Sensor component for medical device system",
+      "component_type": "Sensor",
+      "part_number": "ENC-HD-500",
+      "manufacturer": "Varian Medical Systems",
+      "parent_subsystem_id": "subsystem_001",
+      "metadata": {
+        "confidence_score": 0.85,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "component_004",
+      "entity_type": "component",
+      "label": "Motor Driver Card",
+      "description": "Driver component for medical device system",
+      "component_type": "Driver",
+      "part_number": "MDC-24V-100",
+      "manufacturer": "Varian Medical Systems",
+      "parent_subsystem_id": "subsystem_001",
+      "metadata": {
+        "confidence_score": 0.85,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "component_005",
+      "entity_type": "component",
+      "label": "Safety Interlock System",
+      "description": "Safety component for medical device system",
+      "component_type": "Safety",
+      "part_number": "SIS-MLC-200",
+      "manufacturer": "Varian Medical Systems",
+      "parent_subsystem_id": "subsystem_001",
+      "metadata": {
+        "confidence_score": 0.85,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "component_006",
+      "entity_type": "component",
+      "label": "Gantry Drive Motor",
+      "description": "Motor component for medical device system",
+      "component_type": "Motor",
+      "part_number": "GDM-5KW-SR",
+      "manufacturer": "Varian Medical Systems",
+      "parent_subsystem_id": "subsystem_002",
+      "metadata": {
+        "confidence_score": 0.85,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "component_007",
+      "entity_type": "component",
+      "label": "Gantry Position Encoder",
+      "description": "Sensor component for medical device system",
+      "component_type": "Sensor",
+      "part_number": "GPE-ABS-19BIT",
+      "manufacturer": "Varian Medical Systems",
+      "parent_subsystem_id": "subsystem_002",
+      "metadata": {
+        "confidence_score": 0.85,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "component_008",
+      "entity_type": "component",
+      "label": "Motor Controller",
+      "description": "Controller component for medical device system",
+      "component_type": "Controller",
+      "part_number": "MC-SERVO-5K",
+      "manufacturer": "Varian Medical Systems",
+      "parent_subsystem_id": "subsystem_002",
+      "metadata": {
+        "confidence_score": 0.85,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "component_009",
+      "entity_type": "component",
+      "label": "Brake System",
+      "description": "Safety component for medical device system",
+      "component_type": "Safety",
+      "part_number": "BRK-ELEC-500",
+      "manufacturer": "Varian Medical Systems",
+      "parent_subsystem_id": "subsystem_002",
+      "metadata": {
+        "confidence_score": 0.85,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "component_010",
+      "entity_type": "component",
+      "label": "Couch Drive Motor",
+      "description": "Motor component for medical device system",
+      "component_type": "Motor",
+      "part_number": "CDM-SERVO-2K",
+      "manufacturer": "Varian Medical Systems",
+      "parent_subsystem_id": "subsystem_003",
+      "metadata": {
+        "confidence_score": 0.85,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "component_011",
+      "entity_type": "component",
+      "label": "Position Sensor",
+      "description": "Sensor component for medical device system",
+      "component_type": "Sensor",
+      "part_number": "PS-LINEAR-500",
+      "manufacturer": "Varian Medical Systems",
+      "parent_subsystem_id": "subsystem_003",
+      "metadata": {
+        "confidence_score": 0.85,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "component_012",
+      "entity_type": "component",
+      "label": "Couch Controller",
+      "description": "Controller component for medical device system",
+      "component_type": "Controller",
+      "part_number": "CC-6DOF-MAIN",
+      "manufacturer": "Varian Medical Systems",
+      "parent_subsystem_id": "subsystem_003",
+      "metadata": {
+        "confidence_score": 0.85,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "component_013",
+      "entity_type": "component",
+      "label": "Load Cell Assembly",
+      "description": "Sensor component for medical device system",
+      "component_type": "Sensor",
+      "part_number": "LC-2000KG",
+      "manufacturer": "Varian Medical Systems",
+      "parent_subsystem_id": "subsystem_003",
+      "metadata": {
+        "confidence_score": 0.85,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "spare_001",
+      "entity_type": "spare_part",
+      "label": "Air Filter",
+      "description": "Replacement part for component_001",
+      "part_number": "FILT-AIR-MLC",
+      "manufacturer": "Varian Medical Systems",
+      "parent_component_id": "component_001",
+      "metadata": {
+        "confidence_score": 0.8,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "spare_002",
+      "entity_type": "spare_part",
+      "label": "Leaf Guide Rail",
+      "description": "Replacement part for component_002",
+      "part_number": "LGR-TUNG-120",
+      "manufacturer": "Varian Medical Systems",
+      "parent_component_id": "component_002",
+      "metadata": {
+        "confidence_score": 0.8,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "spare_003",
+      "entity_type": "spare_part",
+      "label": "Drive Belt",
+      "description": "Replacement part for component_010",
+      "part_number": "BELT-COUCH-XL",
+      "manufacturer": "Varian Medical Systems",
+      "parent_component_id": "component_010",
+      "metadata": {
+        "confidence_score": 0.8,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    },
+    {
+      "id": "spare_004",
+      "entity_type": "spare_part",
+      "label": "Safety Interlock Module",
+      "description": "Replacement part for component_005",
+      "part_number": "SIM-MLC-001",
+      "manufacturer": "Varian Medical Systems",
+      "parent_component_id": "component_005",
+      "metadata": {
+        "confidence_score": 0.8,
+        "validation_status": "not_validated",
+        "source_document": "sample_service_manual.txt"
+      }
+    }
+  ],
+  "relationships": [
+    {
+      "relationship_type": "has_subsystem",
+      "source_entity_id": "system_001",
+      "target_entity_id": "subsystem_001",
+      "description": "System contains MLC subsystem"
+    },
+    {
+      "relationship_type": "has_subsystem",
+      "source_entity_id": "system_001",
+      "target_entity_id": "subsystem_002",
+      "description": "System contains gantry subsystem"
+    },
+    {
+      "relationship_type": "has_subsystem",
+      "source_entity_id": "system_001",
+      "target_entity_id": "subsystem_003",
+      "description": "System contains patient support subsystem"
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_001",
+      "target_entity_id": "component_001",
+      "description": "MLC subsystem contains controller"
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_001",
+      "target_entity_id": "component_002",
+      "description": "MLC subsystem contains drive motor"
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_001",
+      "target_entity_id": "component_003",
+      "description": "MLC subsystem contains encoder"
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_002",
+      "target_entity_id": "component_006",
+      "description": "Gantry subsystem contains drive motor"
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_002",
+      "target_entity_id": "component_007",
+      "description": "Gantry subsystem contains encoder"
+    },
+    {
+      "relationship_type": "has_component",
+      "source_entity_id": "subsystem_003",
+      "target_entity_id": "component_010",
+      "description": "Couch subsystem contains drive motor"
+    },
+    {
+      "relationship_type": "has_spare_part",
+      "source_entity_id": "component_001",
+      "target_entity_id": "spare_001",
+      "description": "Controller uses air filter"
+    },
+    {
+      "relationship_type": "has_spare_part",
+      "source_entity_id": "component_002",
+      "target_entity_id": "spare_002",
+      "description": "Motor uses guide rail"
+    },
+    {
+      "relationship_type": "connected_to",
+      "source_entity_id": "component_002",
+      "target_entity_id": "component_003",
+      "description": "Motor connected to encoder"
+    },
+    {
+      "relationship_type": "controlled_by",
+      "source_entity_id": "component_002",
+      "target_entity_id": "component_004",
+      "description": "Motor controlled by driver card"
+    }
+  ],
+  "extraction_metadata": {
+    "source_file": "sample_service_manual.txt",
+    "extraction_method": "simulated",
+    "timestamp": "2025-09-08T14:46:49.102644",
+    "total_entities": 21,
+    "total_relationships": 13
+  }
+}

@@ -1,0 +1,50 @@
+# Core Dependencies
+fastapi>=0.104.1
+uvicorn[standard]>=0.24.0
+jinja2>=3.1.2
+python-multipart>=0.0.6
+
+# AI and ML
+google-generativeai>=0.3.0
+openai>=1.3.0  # Alternative AI provider
+
+# PDF Processing
+PyPDF2>=3.0.1
+pdfplumber>=0.9.0
+pymupdf>=1.23.0  # Alternative PDF library
+python-dotenv>=1.0.0  # For .env file support
+
+# Data Processing
+pandas>=2.1.0
+numpy>=1.24.0
+python-dateutil>=2.8.2
+
+# Logging and Utilities
+loguru>=0.7.2
+pydantic>=2.5.0
+python-dotenv>=1.0.0
+
+# Web Framework
+starlette>=0.27.0
+httpx>=0.25.0  # For async HTTP requests
+
+# Visualization (for dashboard)
+plotly>=5.17.0
+matplotlib>=3.7.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.21.0
+
+# Development
+black>=23.0.0
+flake8>=6.0.0
+mypy>=1.7.0
+
+# Optional: Database support
+# sqlalchemy>=2.0.0
+# alembic>=1.12.0
+
+# Optional: Advanced NLP
+# spacy>=3.7.0
+# transformers>=4.35.0

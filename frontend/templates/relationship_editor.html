@@ -1,0 +1,486 @@
+<!-- Relationship Editor and Validator Interface -->
+
+<!-- Advanced Relationship Editor Modal -->
+<div class="modal fade" id="relationshipEditorModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-share-alt me-2"></i>
+                    Relationship Editor
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <!-- Relationship Form -->
+                    <div class="col-md-8">
+                        <form id="relationship-edit-form">
+                            <input type="hidden" id="edit-relationship-id">
+                            
+                            <!-- Basic Relationship Information -->
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Relationship Definition</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Relationship Type <span class="text-danger">*</span></label>
+                                                <select class="form-select" id="edit-rel-type" required>
+                                                    <optgroup label="Hierarchical">
+                                                        <option value="has_subsystem">Has Subsystem</option>
+                                                        <option value="has_component">Has Component</option>
+                                                        <option value="has_spare_part">Has Spare Part</option>
+                                                        <option value="part_of">Part Of</option>
+                                                    </optgroup>
+                                                    <optgroup label="Functional">
+                                                        <option value="controls">Controls</option>
+                                                        <option value="controlled_by">Controlled By</option>
+                                                        <option value="monitors">Monitors</option>
+                                                        <option value="monitored_by">Monitored By</option>
+                                                        <option value="requires">Requires</option>
+                                                        <option value="provides">Provides</option>
+                                                    </optgroup>
+                                                    <optgroup label="Causal">
+                                                        <option value="causes">Causes</option>
+                                                        <option value="caused_by">Caused By</option>
+                                                        <option value="affects">Affects</option>
+                                                        <option value="affected_by">Affected By</option>
+                                                    </optgroup>
+                                                    <optgroup label="Spatial">
+                                                        <option value="connected_to">Connected To</option>
+                                                        <option value="adjacent_to">Adjacent To</option>
+                                                        <option value="contains">Contains</option>
+                                                        <option value="contained_in">Contained In</option>
+                                                    </optgroup>
+                                                </select>
+                                                <div class="form-text" id="relationship-type-help">
+                                                    Select the type of relationship between entities
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Confidence Score</label>
+                                                <div class="input-group">
+                                                    <input type="range" class="form-range" id="edit-rel-confidence" 
+                                                           min="0" max="1" step="0.01" value="0.8">
+                                                    <span class="input-group-text" id="rel-confidence-display">0.80</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- Entity Selection -->
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Source Entity <span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="edit-source-entity" 
+                                                           placeholder="Enter or search entity ID" required>
+                                                    <button class="btn btn-outline-secondary" type="button" 
+                                                            onclick="showEntityBrowser('source')">
+                                                        <i class="fas fa-search"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="form-text">
+                                                    <span id="source-entity-info" class="text-muted">No entity selected</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="mb-3">
+                                                <label class="form-label">Target Entity <span class="text-danger">*</span></label>
+                                                <div class="input-group">
+                                                    <input type="text" class="form-control" id="edit-target-entity" 
+                                                           placeholder="Enter or search entity ID" required>
+                                                    <button class="btn btn-outline-secondary" type="button" 
+                                                            onclick="showEntityBrowser('target')">
+                                                        <i class="fas fa-search"></i>
+                                                    </button>
+                                                </div>
+                                                <div class="form-text">
+                                                    <span id="target-entity-info" class="text-muted">No entity selected</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Description</label>
+                                        <textarea class="form-control" id="edit-rel-description" rows="2" 
+                                                  placeholder="Describe the relationship between entities"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Relationship Properties -->
+                            <div class="card mb-3">
+                                <div class="card-header">
+                                    <h6 class="mb-0">Relationship Properties</h6>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="rel-is-functional">
+                                                <label class="form-check-label" for="rel-is-functional">
+                                                    Functional (One-to-One)
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="rel-is-symmetric">
+                                                <label class="form-check-label" for="rel-is-symmetric">
+                                                    Symmetric
+                                                </label>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-4">
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="rel-is-transitive">
+                                                <label class="form-check-label" for="rel-is-transitive">
+                                                    Transitive
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mt-3">
+                                        <label class="form-label">Inverse Relationship</label>
+                                        <select class="form-select" id="edit-inverse-relationship">
+                                            <option value="">No inverse relationship</option>
+                                            <!-- Options will be populated dynamically -->
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    
+                    <!-- Validation and Suggestions Panel -->
+                    <div class="col-md-4">
+                        <div class="card mb-3">
+                            <div class="card-header">
+                                <h6 class="mb-0">
+                                    <i class="fas fa-check-circle me-1"></i>
+                                    Validation Status
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="relationship-validation-results">
+                                    <!-- Validation results will be displayed here -->
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <button type="button" class="btn btn-outline-primary btn-sm w-100" 
+                                            onclick="validateCurrentRelationship()">
+                                        <i class="fas fa-sync me-1"></i>
+                                        Validate Relationship
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">
+                                    <i class="fas fa-lightbulb me-1"></i>
+                                    Smart Suggestions
+                                </h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="relationship-suggestions">
+                                    <!-- AI suggestions will be displayed here -->
+                                </div>
+                                
+                                <div class="mt-3">
+                                    <button type="button" class="btn btn-outline-info btn-sm w-100" 
+                                            onclick="generateRelationshipSuggestions()">
+                                        <i class="fas fa-magic me-1"></i>
+                                        Generate Suggestions
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-warning" onclick="saveRelationshipAsDraft()">
+                    <i class="fas fa-save me-1"></i>
+                    Save as Draft
+                </button>
+                <button type="button" class="btn btn-success" onclick="saveAndValidateRelationship()">
+                    <i class="fas fa-check me-1"></i>
+                    Save & Validate
+                </button>
+                <button type="button" class="btn btn-primary" onclick="saveRelationship()">
+                    <i class="fas fa-save me-1"></i>
+                    Save Relationship
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Entity Browser Modal -->
+<div class="modal fade" id="entityBrowserModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-search me-2"></i>
+                    Select Entity
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="entity-search" 
+                               placeholder="Search entities by label or ID...">
+                        <button class="btn btn-outline-secondary" onclick="searchEntities()">
+                            <i class="fas fa-search"></i>
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="mb-3">
+                    <div class="btn-group w-100" role="group">
+                        <input type="radio" class="btn-check" name="entity-type-filter" 
+                               id="filter-all" value="" checked>
+                        <label class="btn btn-outline-primary" for="filter-all">All</label>
+                        
+                        <input type="radio" class="btn-check" name="entity-type-filter" 
+                               id="filter-systems" value="system">
+                        <label class="btn btn-outline-primary" for="filter-systems">Systems</label>
+                        
+                        <input type="radio" class="btn-check" name="entity-type-filter" 
+                               id="filter-subsystems" value="subsystem">
+                        <label class="btn btn-outline-primary" for="filter-subsystems">Subsystems</label>
+                        
+                        <input type="radio" class="btn-check" name="entity-type-filter" 
+                               id="filter-components" value="component">
+                        <label class="btn btn-outline-primary" for="filter-components">Components</label>
+                    </div>
+                </div>
+                
+                <div class="table-responsive" style="max-height: 400px; overflow-y: auto;">
+                    <table class="table table-hover">
+                        <thead class="table-light sticky-top">
+                            <tr>
+                                <th>Select</th>
+                                <th>Label</th>
+                                <th>Type</th>
+                                <th>ID</th>
+                                <th>Confidence</th>
+                            </tr>
+                        </thead>
+                        <tbody id="entity-browser-results">
+                            <!-- Search results will be populated here -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="button" class="btn btn-primary" onclick="selectBrowsedEntity()" disabled id="select-entity-btn">
+                    Select Entity
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Relationship Visualization Modal -->
+<div class="modal fade" id="relationshipVisualizationModal" tabindex="-1">
+    <div class="modal-dialog modal-xl">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-project-diagram me-2"></i>
+                    Relationship Visualization
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-9">
+                        <div id="relationship-network-container" style="height: 500px; border: 1px solid #ddd;">
+                            <!-- Network visualization will be rendered here -->
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">Visualization Controls</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <label class="form-label">Layout Type</label>
+                                    <select class="form-select form-select-sm" id="viz-layout-type">
+                                        <option value="hierarchical">Hierarchical</option>
+                                        <option value="force">Force-directed</option>
+                                        <option value="circular">Circular</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="mb-3">
+                                    <label class="form-label">Show Relationships</label>
+                                    <div class="form-check form-check-sm">
+                                        <input class="form-check-input" type="checkbox" id="show-hierarchical" checked>
+                                        <label class="form-check-label">Hierarchical</label>
+                                    </div>
+                                    <div class="form-check form-check-sm">
+                                        <input class="form-check-input" type="checkbox" id="show-functional" checked>
+                                        <label class="form-check-label">Functional</label>
+                                    </div>
+                                    <div class="form-check form-check-sm">
+                                        <input class="form-check-input" type="checkbox" id="show-causal">
+                                        <label class="form-check-label">Causal</label>
+                                    </div>
+                                </div>
+                                
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-primary btn-sm" onclick="updateRelationshipVisualization()">
+                                        Update View
+                                    </button>
+                                    <button class="btn btn-outline-secondary btn-sm" onclick="exportRelationshipDiagram()">
+                                        Export Diagram
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="card mt-3">
+                            <div class="card-header">
+                                <h6 class="mb-0">Selected Relationship</h6>
+                            </div>
+                            <div class="card-body">
+                                <div id="selected-relationship-info">
+                                    <p class="text-muted">Click on a relationship to view details</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bulk Relationship Operations Modal -->
+<div class="modal fade" id="bulkRelationshipModal" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">
+                    <i class="fas fa-layer-group me-2"></i>
+                    Bulk Relationship Operations
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">Auto-Generate Relationships</h6>
+                            </div>
+                            <div class="card-body">
+                                <form id="auto-generate-form">
+                                    <div class="mb-3">
+                                        <label class="form-label">Generation Scope</label>
+                                        <select class="form-select" id="generation-scope">
+                                            <option value="all">All Entities</option>
+                                            <option value="system">Specific System</option>
+                                            <option value="subsystem">Specific Subsystem</option>
+                                            <option value="selected">Selected Entities</option>
+                                        </select>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Relationship Types to Generate</label>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="gen-hierarchical" checked>
+                                            <label class="form-check-label">Hierarchical (has_subsystem, has_component)</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="gen-functional">
+                                            <label class="form-check-label">Functional (controls, monitors)</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input class="form-check-input" type="checkbox" id="gen-spatial">
+                                            <label class="form-check-label">Spatial (connected_to, adjacent_to)</label>
+                                        </div>
+                                    </div>
+                                    
+                                    <div class="mb-3">
+                                        <label class="form-label">Minimum Confidence Threshold</label>
+                                        <input type="range" class="form-range" id="confidence-threshold" 
+                                               min="0.1" max="1.0" step="0.1" value="0.6">
+                                        <div class="d-flex justify-content-between">
+                                            <small>0.1</small>
+                                            <small id="threshold-display">0.6</small>
+                                            <small>1.0</small>
+                                        </div>
+                                    </div>
+                                    
+                                    <button type="button" class="btn btn-primary w-100" onclick="generateRelationships()">
+                                        <i class="fas fa-magic me-1"></i>
+                                        Generate Relationships
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="card">
+                            <div class="card-header">
+                                <h6 class="mb-0">Validation & Cleanup</h6>
+                            </div>
+                            <div class="card-body">
+                                <div class="mb-3">
+                                    <button type="button" class="btn btn-outline-warning w-100 mb-2" 
+                                            onclick="validateAllRelationships()">
+                                        <i class="fas fa-check-double me-1"></i>
+                                        Validate All Relationships
+                                    </button>
+                                    
+                                    <button type="button" class="btn btn-outline-danger w-100 mb-2" 
+                                            onclick="findDuplicateRelationships()">
+                                        <i class="fas fa-copy me-1"></i>
+                                        Find Duplicates
+                                    </button>
+                                    
+                                    <button type="button" class="btn btn-outline-info w-100 mb-2" 
+                                            onclick="detectCircularDependencies()">
+                                        <i class="fas fa-recycle me-1"></i>
+                                        Detect Circular Dependencies
+                                    </button>
+                                    
+                                    <button type="button" class="btn btn-outline-secondary w-100" 
+                                            onclick="optimizeRelationshipGraph()">
+                                        <i class="fas fa-compress-arrows-alt me-1"></i>
+                                        Optimize Graph
+                                    </button>
+                                </div>
+                                
+                                <div id="bulk-operation-results">
+                                    <!-- Results will be displayed here -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
